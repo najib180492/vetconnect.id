@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VetBook - Booking Dokter Hewan</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Library Supabase via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-10">
 
@@ -26,9 +28,6 @@
       <h2 class="text-xl font-bold text-gray-900">drh. Nur Rohman</h2>
       <p class="text-sm text-teal-600 font-medium">Dokter Hewan Praktisi</p>
       <p class="text-xs text-gray-500 mt-1">📍 Malang & Sekitarnya</p>
-      <p class="text-xs text-gray-600 mt-3 leading-relaxed">
-        Melayani konsultasi kesehatan hewan kecil, pemeriksaan rutin, vaksinasi, dan layanan pemanggilan ke rumah (home visit).
-      </p>
     </section>
 
     <!-- Daftar Layanan -->
@@ -37,36 +36,30 @@
         🩺 Pilih Layanan
       </h3>
 
-      <!-- Card Layanan 1 -->
-      <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm hover:border-teal-500 transition-all">
+      <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm">
         <div>
           <h4 class="font-bold text-gray-900">Konsultasi Hewan</h4>
-          <p class="text-xs text-gray-500">Pemeriksaan fisik & konsultasi</p>
           <p class="text-sm font-semibold text-teal-600 mt-1">Rp 75.000</p>
         </div>
-        <button onclick="pilihLayanan('Konsultasi Hewan', 75000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow hover:bg-teal-700">
+        <button onclick="pilihLayanan('Konsultasi Hewan', 75000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">
           Pilih
         </button>
       </div>
 
-      <!-- Card Layanan 2 -->
-      <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm hover:border-teal-500 transition-all">
+      <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm">
         <div>
           <h4 class="font-bold text-gray-900">Vaksinasi Rutin</h4>
-          <p class="text-xs text-gray-500">Vaksin kucing / anjing + Buku</p>
           <p class="text-sm font-semibold text-teal-600 mt-1">Rp 150.000</p>
         </div>
-        <button onclick="pilihLayanan('Vaksinasi Rutin', 150000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow hover:bg-teal-700">
+        <button onclick="pilihLayanan('Vaksinasi Rutin', 150000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">
           Pilih
         </button>
       </div>
     </section>
 
-    <!-- Form & Jadwal Booking (Hidden by default) -->
+    <!-- Form Booking -->
     <section id="section-booking" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4 hidden">
-      <h3 class="text-md font-bold text-teal-700 border-b pb-2">
-        📅 Formulir Booking
-      </h3>
+      <h3 class="text-md font-bold text-teal-700 border-b pb-2">📅 Formulir Booking</h3>
 
       <div>
         <label class="block text-xs font-semibold text-gray-600 mb-1">Layanan Terpilih</label>
@@ -75,27 +68,32 @@
 
       <div>
         <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Tanggal</label>
-        <input type="date" id="booking-date" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+        <input type="date" id="booking-date" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
       <div>
         <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pemilik</label>
-        <input type="text" id="owner-name" placeholder="Contoh: Budi" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+        <input type="text" id="owner-name" placeholder="Contoh: Budi" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
       <div>
         <label class="block text-xs font-semibold text-gray-600 mb-1">Nama & Jenis Hewan</label>
-        <input type="text" id="pet-info" placeholder="Contoh: Milo (Kucing)" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+        <input type="text" id="pet-info" placeholder="Contoh: Milo (Kucing)" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
-      <button onclick="kirimBooking()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold shadow-lg hover:bg-teal-700 transition-all text-sm">
+      <button onclick="kirimBooking()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold shadow-lg text-sm">
         Konfirmasi Booking via WhatsApp
       </button>
     </section>
 
   </main>
 
+  <!-- Inisialisasi Supabase Client -->
   <script>
+    const SUPABASE_URL = "https://gobaqeeadobzpscqexax.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_u_79Qw9qcA_hhfTx01w2fA_Cu";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     let layananAktif = '';
 
     function pilihLayanan(nama, harga) {
@@ -115,8 +113,7 @@
         return;
       }
 
-      // Format Pesan WhatsApp
-      const noWA = "6281234567890"; // Ganti dengan nomor WhatsApp Anda
+      const noWA = "6281234567890";
       const pesan = `Halo drh. Nur Rohman, saya ingin melakukan booking layanan VetBook:%0A%0A` +
                     `📌 *Layanan:* ${layananAktif}%0A` +
                     `📅 *Tanggal:* ${tanggal}%0A` +
