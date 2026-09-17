@@ -38,10 +38,10 @@
 
       <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm">
         <div>
-          <h4 class="font-bold text-gray-900">Konsultasi Pet & Poultry</h4>
-          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 60.000</p>
+          <h4 class="font-bold text-gray-900">Konsultasi Pet and Poultry</h4>
+          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 50.000</p>
         </div>
-        <button type="button" onclick="pilihLayanan('Konsultasi Pet & Poultry', 60000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all">
+        <button type="button" onclick="pilihLayanan('Konsultasi Pet and Poultry', 50000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all">
           Pilih
         </button>
       </div>
@@ -49,7 +49,7 @@
       <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm">
         <div>
           <h4 class="font-bold text-gray-900">Vaksinasi Hewan</h4>
-          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 150.000</p>
+          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 160.000</p>
         </div>
         <button type="button" onclick="pilihLayanan('Vaksinasi Hewan', 160000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all">
           Pilih
@@ -57,9 +57,9 @@
       </div>
     </section>
 
-    <!-- Form Booking -->
+    <!-- Form Booking & Instruksi Pembayaran -->
     <section id="section-booking" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4 hidden">
-      <h3 class="text-md font-bold text-teal-700 border-b pb-2">📅 Formulir Booking</h3>
+      <h3 class="text-md font-bold text-teal-700 border-b pb-2">📅 Formulir Booking & Pembayaran</h3>
 
       <div>
         <label class="block text-xs font-semibold text-gray-600 mb-1">Layanan Terpilih</label>
@@ -67,7 +67,7 @@
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Tanggal</label>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Tanggal Konsultasi</label>
         <input type="date" id="booking-date" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
@@ -81,8 +81,19 @@
         <input type="text" id="pet-info" placeholder="Contoh: Milo (Kucing) / Ayam Broiler" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
+      <!-- Kotak Rincian Rekening Pembayaran -->
+      <div class="bg-teal-50 border border-teal-200 p-3.5 rounded-xl text-xs space-y-1.5">
+        <p class="font-bold text-teal-900">💳 Instruksi Pembayaran:</p>
+        <p class="text-gray-700">Silakan transfer biaya layanan sesuai di atas ke rekening berikut:</p>
+        <div class="bg-white p-2.5 rounded-lg border border-teal-100 font-mono text-gray-800 space-y-1">
+          <p class="font-bold text-teal-700">BCA: 0300664695</p>
+          <p class="text-gray-600">a.n. drh. Nur Najib</p>
+        </div>
+        <p class="text-gray-500 italic">*Silakan kirimkan foto/screenshoot bukti transfer setelah tombol di bawah diklik.</p>
+      </div>
+
       <button type="button" onclick="kirimBooking()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold shadow-lg text-sm hover:bg-teal-700 active:scale-95 transition-all">
-        Konfirmasi Booking via WhatsApp
+        Kirim Bukti Transfer via WhatsApp
       </button>
     </section>
 
@@ -120,7 +131,7 @@
         return;
       }
 
-      // 1. Simpan ke Supabase jika koneksi siap
+      // 1. Simpan data ke Supabase jika koneksi siap
       if (dbSupabase) {
         try {
           await dbSupabase.from('bookings').insert([
@@ -132,18 +143,18 @@
             }
           ]);
         } catch (err) {
-          console.log('Penimpanan database dilewati, membuka WhatsApp...');
+          console.log('Penimpanan database dilewati, melanjutkan ke WhatsApp...');
         }
       }
 
-      // 2. Kirim pesan ke WhatsApp Anda
+      // 2. Kirim pesan konfirmasi + instruksi bukti transfer ke WhatsApp
       const noWA = "6285725175566";
-      const pesan = `Halo drh. Najib, saya ingin melakukan booking layanan VetBook:%0A%0A` +
+      const pesan = `Halo drh. Najib, saya ingin mengonfirmasi booking layanan VetBook:%0A%0A` +
                     `📌 *Layanan:* ${layananAktif}%0A` +
                     `📅 *Tanggal:* ${tanggal}%0A` +
                     `👤 *Pemilik:* ${pemilik}%0A` +
                     `🐾 *Hewan:* ${hewan}%0A%0A` +
-                    `Mohon konfirmasi ketersediaan slotnya. Terima kasih!`;
+                    `💳 *Status:* Saya telah melakukan pembayaran. Berikut saya lampirkan foto bukti transfernya. Mohon konfirmasi jadwalnya. Terima kasih!`;
 
       window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
     }
