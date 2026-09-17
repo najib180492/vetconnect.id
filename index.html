@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VetBook - Booking Dokter Hewan</title>
+  <title>VetBook - Booking & Digital Shop</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Library Supabase via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -28,7 +28,7 @@
       <p class="text-xs text-gray-500 mt-1">📍 Malang, Indonesia</p>
     </section>
 
-    <!-- Daftar Layanan -->
+    <!-- Daftar Layanan Jasa -->
     <section class="space-y-3">
       <h3 class="text-md font-bold text-gray-800 flex items-center gap-1">
         🩺 Pilih Layanan
@@ -46,48 +46,79 @@
 
       <div class="bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center shadow-sm">
         <div>
-          <h4 class="font-bold text-gray-900">Vaksinasi Hewan</h4>
+          <h4 class="font-bold text-gray-900">Vaksinasi Kucing</h4>
           <p class="text-sm font-semibold text-teal-600 mt-1">Rp 160.000</p>
         </div>
-        <button type="button" onclick="pilihLayanan('Vaksinasi Hewan', 160000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all">
+        <button type="button" onclick="pilihLayanan('Vaksinasi Kucing', 160000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all">
           Pilih
+        </button>
+      </div>
+    </section>
+
+    <!-- E-Book -->
+    <section class="space-y-3">
+      <h3 class="text-md font-bold text-gray-800 flex items-center gap-1">
+        📚 E-Book
+      </h3>
+
+      <!-- E-Book 1 -->
+      <div class="bg-white p-4 rounded-xl border border-teal-100 flex justify-between items-center shadow-sm">
+        <div class="pr-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md">PDF Digital</span>
+          <h4 class="font-bold text-gray-900 mt-1 text-sm">Panduan Pemeliharaan Ayam Yang Efisien dan Minim Bau</h4>
+          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 49.000</p>
+        </div>
+        <button type="button" onclick="pilihLayanan('E-Book: Panduan Pemeliharaan Ayam Yang Efisien dan Minim Bau', 49000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all shrink-0">
+          Beli
+        </button>
+      </div>
+
+      <!-- E-Book 2 -->
+      <div class="bg-white p-4 rounded-xl border border-teal-100 flex justify-between items-center shadow-sm">
+        <div class="pr-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md">PDF Digital</span>
+          <h4 class="font-bold text-gray-900 mt-1 text-sm">Strategi Vet Pemula Dapatkan Cash Flow Legal Pertama Tanpa Harus Buka Klinik Sendiri</h4>
+          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 119.000</p>
+        </div>
+        <button type="button" onclick="pilihLayanan('E-Book: Strategi Vet Pemula Dapatkan Cash Flow Legal Pertama Tanpa Harus Buka Klinik Sendiri, 119000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all shrink-0">
+          Beli
         </button>
       </div>
     </section>
 
     <!-- Form Booking & Instruksi Pembayaran -->
     <section id="section-booking" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4 hidden">
-      <h3 class="text-md font-bold text-teal-700 border-b pb-2">📅 Formulir Booking & Pembayaran</h3>
+      <h3 class="text-md font-bold text-teal-700 border-b pb-2">📅 Formulir Pemesanan & Pembayaran</h3>
 
       <div>
-        <label class="block text-xs font-semibold text-gray-600 mb-1">Layanan Terpilih</label>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Item / Layanan Terpilih</label>
         <input type="text" id="selected-service" readonly class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm font-bold text-teal-800">
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Tanggal Konsultasi</label>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Tanggal</label>
         <input type="date" id="booking-date" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pemilik</label>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pembeli / Pemilik</label>
         <input type="text" id="owner-name" placeholder="Contoh: Budi" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama & Jenis Hewan</label>
-        <input type="text" id="pet-info" placeholder="Contoh: Milo (Kucing) / Ayam Broiler" class="w-full p-2.5 border rounded-lg text-sm">
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama & Jenis Hewan / Catatan</label>
+        <input type="text" id="pet-info" placeholder="Contoh: Milo (Kucing) / Pembelian E-Book" class="w-full p-2.5 border rounded-lg text-sm">
       </div>
 
       <!-- Kotak Rincian Rekening Pembayaran -->
       <div class="bg-teal-50 border border-teal-200 p-3.5 rounded-xl text-xs space-y-1.5">
         <p class="font-bold text-teal-900">💳 Instruksi Pembayaran:</p>
-        <p class="text-gray-700">Silakan transfer biaya layanan sesuai di atas ke rekening berikut:</p>
+        <p class="text-gray-700">Silakan transfer biaya layanan/produk ke rekening berikut:</p>
         <div class="bg-white p-2.5 rounded-lg border border-teal-100 font-mono text-gray-800 space-y-1">
           <p class="font-bold text-teal-700">BCA: 0300664695</p>
           <p class="text-gray-600">a.n. Nur Rohman Najib</p>
         </div>
-        <p class="text-gray-500 italic">*Silakan kirimkan foto/screenshoot bukti transfer setelah tombol di bawah diklik.</p>
+        <p class="text-gray-500 italic">*Silakan kirimkan foto/screenshot bukti transfer setelah tombol di bawah diklik.</p>
       </div>
 
       <button type="button" onclick="kirimBooking()" class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold shadow-lg text-sm hover:bg-teal-700 active:scale-95 transition-all">
@@ -125,7 +156,7 @@
       const hewan = document.getElementById('pet-info').value;
 
       if (!tanggal || !pemilik || !hewan) {
-        alert('Mohon lengkapi semua data booking!');
+        alert('Mohon lengkapi semua data pemesanan!');
         return;
       }
 
@@ -141,18 +172,18 @@
             }
           ]);
         } catch (err) {
-          console.log('Penimpanan database dilewati, melanjutkan ke WhatsApp...');
+          console.log('Penyimpanan database dilewati, melanjutkan ke WhatsApp...');
         }
       }
 
       // 2. Kirim pesan konfirmasi + instruksi bukti transfer ke WhatsApp
       const noWA = "6285725175566";
-      const pesan = `Halo drh. Najib, saya ingin mengonfirmasi booking layanan VetBook:%0A%0A` +
-                    `📌 *Layanan:* ${layananAktif}%0A` +
+      const pesan = `Halo drh. Najib, saya ingin mengonfirmasi pesanan/booking VetBook:%0A%0A` +
+                    `📌 *Item/Layanan:* ${layananAktif}%0A` +
                     `📅 *Tanggal:* ${tanggal}%0A` +
-                    `👤 *Pemilik:* ${pemilik}%0A` +
-                    `🐾 *Hewan:* ${hewan}%0A%0A` +
-                    `💳 *Status:* Saya telah melakukan pembayaran. Berikut saya lampirkan foto bukti transfernya. Mohon konfirmasi jadwalnya. Terima kasih!`;
+                    `👤 *Nama:* ${pemilik}%0A` +
+                    `🐾 *Info/Catatan:* ${hewan}%0A%0A` +
+                    `💳 *Status:* Saya telah melakukan pembayaran. Berikut saya lampirkan foto bukti transfernya. Terima kasih!`;
 
       window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
     }
