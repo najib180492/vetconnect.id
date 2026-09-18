@@ -22,7 +22,7 @@
 
     <!-- Profil Dokter -->
     <section class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 text-center">
-      <img src="file_00000000952481f5978607f3f20e0da3.png" alt="drh. Najib" class="w-24 h-24 rounded-full mx-auto object-cover border-2 border-teal-500 shadow-md mb-3">
+      <img src="https://najibvet.github.io/profile.jpg" alt="drh. Najib" class="w-24 h-24 rounded-full mx-auto object-cover border-2 border-teal-500 shadow-md mb-3" onerror="this.src='https://via.placeholder.com/150?text=drh.+Najib'">
       <h2 class="text-xl font-bold text-gray-900">drh. Najib</h2>
       <p class="text-sm text-teal-600 font-medium">Vet Consultant</p>
       <p class="text-xs text-gray-500 mt-1">📍 Malang, Indonesia</p>
@@ -80,7 +80,19 @@
           <h4 class="font-bold text-gray-900 mt-1 text-sm">Strategi Vet Pemula Dapatkan Cash Flow Legal Pertama Tanpa Harus Buka Klinik Sendiri</h4>
           <p class="text-sm font-semibold text-teal-600 mt-1">Rp 119.000</p>
         </div>
-        <button type="button" onclick="pilihLayanan('E-Book: Strategi Vet Pemula Dapatkan Cash Flow Legal Pertama Tanpa Harus Buka Klinik Sendiri, 119000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all shrink-0">
+        <button type="button" onclick="pilihLayanan('E-Book: Strategi Vet Pemula Dapatkan Cash Flow Legal Pertama Tanpa Harus Buka Klinik Sendiri', 119000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all shrink-0">
+          Beli
+        </button>
+      </div>
+
+      <!-- E-Book 3 (Baru Ditambahkan) -->
+      <div class="bg-white p-4 rounded-xl border border-teal-100 flex justify-between items-center shadow-sm">
+        <div class="pr-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md">PDF Digital</span>
+          <h4 class="font-bold text-gray-900 mt-1 text-sm">Cegah Sebelum Mahal: Resep Sehat Anabul Hemat ala Dokter Hewan</h4>
+          <p class="text-sm font-semibold text-teal-600 mt-1">Rp 49.000</p>
+        </div>
+        <button type="button" onclick="pilihLayanan('E-Book: Cegah Sebelum Mahal: Resep Sehat Anabul Hemat ala Dokter Hewan', 49000)" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-teal-700 active:scale-95 transition-all shrink-0">
           Beli
         </button>
       </div>
@@ -133,7 +145,7 @@
     const SUPABASE_URL = "https://gobaqeeadobzpscqexax.supabase.co";
     const SUPABASE_KEY = "sb_publishable_u_79Qw9qcA_hhfTx01w2fA_Cu";
     
-    // Inisialisasi Supabase tanpa bentrok variabel
+    // Inisialisasi Supabase
     let dbSupabase = null;
     if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
       dbSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -179,10 +191,10 @@
       // 2. Kirim pesan konfirmasi + instruksi bukti transfer ke WhatsApp
       const noWA = "6285725175566";
       const pesan = `Halo drh. Najib, saya ingin mengonfirmasi pesanan/booking VetBook:%0A%0A` +
-                    `📌 *Item/Layanan:* ${layananAktif}%0A` +
-                    `📅 *Tanggal:* ${tanggal}%0A` +
-                    `👤 *Nama:* ${pemilik}%0A` +
-                    `🐾 *Info/Catatan:* ${hewan}%0A%0A` +
+                    `📌 *Item/Layanan:* ${encodeURIComponent(layananAktif)}%0A` +
+                    `📅 *Tanggal:* ${encodeURIComponent(tanggal)}%0A` +
+                    `👤 *Nama:* ${encodeURIComponent(pemilik)}%0A` +
+                    `🐾 *Info/Catatan:* ${encodeURIComponent(hewan)}%0A%0A` +
                     `💳 *Status:* Saya telah melakukan pembayaran. Berikut saya lampirkan foto bukti transfernya. Terima kasih!`;
 
       window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
